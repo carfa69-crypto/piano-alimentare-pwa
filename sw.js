@@ -1,11 +1,17 @@
+
 // Service Worker per Piano Alimentare PWA
+
 const CACHE_NAME = 'piano-alimentare-v1';
+
+// ✅ Percorsi relativi per GitHub Pages
 const urlsToCache = [
-  '/piano-alimentare-pwa.html',
-  '/manifest.json'
+  './piano-alimentare-pwa.html',
+  './manifest.json',
+  './icon-192.png',
+  './icon-512.png'
 ];
 
-// Installazione
+// Installazione: salva i file nella cache
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
@@ -13,7 +19,7 @@ self.addEventListener('install', event => {
   );
 });
 
-// Attivazione
+// Attivazione: pulizia delle vecchie cache
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys().then(cacheNames => {
@@ -28,7 +34,7 @@ self.addEventListener('activate', event => {
   );
 });
 
-// Fetch - Strategia: Cache first, fallback to network
+// Fetch: Cache-first con fallback alla rete
 self.addEventListener('fetch', event => {
   event.respondWith(
     caches.match(event.request)
